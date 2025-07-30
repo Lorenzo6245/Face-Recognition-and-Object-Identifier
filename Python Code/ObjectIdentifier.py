@@ -55,5 +55,3 @@ class OI():
                     self.coords.append([ax, ay, bx, by])
         
         return self.datas
-    
-OI("Esperimenti/example.jpg").printinfo()

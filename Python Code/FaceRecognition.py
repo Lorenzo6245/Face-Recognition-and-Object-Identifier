@@ -2,15 +2,29 @@ import cv2
 from ObjectIdentifier import OI
 from numpy import zeros_like
 
-def face_recognition():
+def get_camera() -> int:
+    selected_camera: str = input("Which camera would u like to use?\n")
+    try:
+        selected_camera: int = int(selected_camera)
+    except ValueError:
+        print("Invalid camera")
+        return 0
+    return selected_camera
+
+def face_recognition() -> int | None:
+    
     #import a pre-trained AI model for the face recognition
     model = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    
     #start the camera capture
-    cam = cv2.VideoCapture(0)
+    selected_camera: int = get_camera()
+    cam = cv2.VideoCapture(selected_camera)
 
     if not cam.isOpened():
-        print("ERROR: Unable to access the cam")
+        print(f"ERROR: Unable to access the cam {selected_camera}")
         return 1
+    else:
+        print(f"Cam {selected_camera} opened successfully!")
     
     print("press q to exit")
 
@@ -54,6 +68,11 @@ def face_recognition():
 
     cam.release()
     cv2.destroyAllWindows()
+    return None
+
+def main() -> None:
+    face_recognition()
+    return None
 
 if __name__ == "__main__":
-    face_recognition()
+    main()
